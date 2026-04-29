@@ -1,0 +1,138 @@
+---
+layout: base.njk
+title: L10N.md Standard
+description: A typewriter-inspired Eleventy site documenting the L10N.md standard and its versioned JSON Schemas.
+---
+
+<section id="shape" class="sheet section">
+  <div class="section-heading">
+    <p class="section-kicker">Why this exists</p>
+    <h2>A small contract that scales from one file to many</h2>
+  </div>
+  <div class="two-up">
+    <div>
+      <p>
+        The convention works because it keeps the machine-readable part tiny and pushes the subtle guidance into normal Markdown.
+        This standard keeps that shape: frontmatter for structure, prose for judgment, and extra files only when the translation surface actually splits.
+      </p>
+      <p>
+        The result is easy to author in a repository, easy to review in pull requests, and easy to validate with JSON Schema.
+      </p>
+    </div>
+    <aside class="callout">
+      <p class="callout-label">Directory shape</p>
+      <pre><code>L10N.md
+examples/
+  app/
+    L10N.md
+    L10N/
+      es.md
+      ja.md
+schemas/
+  v1/</code></pre>
+    </aside>
+  </div>
+</section>
+
+<section id="documents" class="sheet section">
+  <div class="section-heading">
+    <p class="section-kicker">Document types</p>
+    <h2>Three document shapes, one mental model</h2>
+  </div>
+  <div class="card-grid">
+    <article class="card">
+      <h3>Root `L10N.md`</h3>
+      <p>Defines repository-wide context such as source language, tone, formatting rules, and brand terminology.</p>
+      <p><a href="/L10N.md">Read the canonical example</a></p>
+    </article>
+    <article class="card">
+      <h3>Scoped `L10N.md`</h3>
+      <p>Lives inside a product or package directory and adds workflow settings like sources, validation strategy, target path, and target locales.</p>
+      <p><a href="/examples/app/L10N.md">Read the scoped example</a></p>
+    </article>
+    <article class="card">
+      <h3>`L10N/&lt;locale&gt;.md`</h3>
+      <p>Captures language-specific guidance that should not leak into every locale, such as terminology preferences or layout constraints.</p>
+      <p><a href="/examples/app/L10N/es.md">Read a locale overlay</a></p>
+    </article>
+  </div>
+
+  <div class="snippet-grid">
+    <article>
+      <p class="snippet-label">Global standard</p>
+      <pre class="snippet"><code>{{ reference.standard | escape }}</code></pre>
+    </article>
+    <article>
+      <p class="snippet-label">Scoped example</p>
+      <pre class="snippet"><code>{{ reference.examples.scoped | escape }}</code></pre>
+    </article>
+    <article>
+      <p class="snippet-label">Spanish overlay</p>
+      <pre class="snippet"><code>{{ reference.examples.es | escape }}</code></pre>
+    </article>
+    <article>
+      <p class="snippet-label">Japanese overlay</p>
+      <pre class="snippet"><code>{{ reference.examples.ja | escape }}</code></pre>
+    </article>
+  </div>
+</section>
+
+<section id="schema" class="sheet section">
+  <div class="section-heading">
+    <p class="section-kicker">Versioned schema</p>
+    <h2>Schema files that can evolve without changing the editing model</h2>
+  </div>
+  <p>
+    The versioned schema set lives in <code>schemas/v1/</code>. Each document shape gets its own contract, which keeps validation explicit
+    while leaving room for future versions to add fields or tighten rules.
+  </p>
+  <div class="schema-links">
+    <a href="/schemas/v1/l10n-document.schema.json">Schema entry point</a>
+    <a href="/schemas/v1/global-document.schema.json">Global document schema</a>
+    <a href="/schemas/v1/scoped-document.schema.json">Scoped document schema</a>
+    <a href="/schemas/v1/locale-overlay.schema.json">Locale overlay schema</a>
+  </div>
+  <div class="snippet-grid">
+    <article class="snippet-full">
+      <p class="snippet-label">`l10n-document.schema.json`</p>
+      <pre class="snippet"><code>{{ reference.schemas.entry | prettyJson | escape }}</code></pre>
+    </article>
+    <article>
+      <p class="snippet-label">`global-document.schema.json`</p>
+      <pre class="snippet"><code>{{ reference.schemas.global | prettyJson | escape }}</code></pre>
+    </article>
+    <article>
+      <p class="snippet-label">`scoped-document.schema.json`</p>
+      <pre class="snippet"><code>{{ reference.schemas.scoped | prettyJson | escape }}</code></pre>
+    </article>
+    <article class="snippet-full">
+      <p class="snippet-label">`locale-overlay.schema.json`</p>
+      <pre class="snippet"><code>{{ reference.schemas.locale | prettyJson | escape }}</code></pre>
+    </article>
+  </div>
+</section>
+
+<section id="workflow" class="sheet section">
+  <div class="section-heading">
+    <p class="section-kicker">Workflow</p>
+    <h2>Human editing, machine checks, quiet tooling</h2>
+  </div>
+  <div class="two-up">
+    <div>
+      <p>
+        Validation is handled by a small Node script that parses Markdown frontmatter, classifies each `L10N` document by its path,
+        and checks it against the matching schema.
+      </p>
+      <p>
+        `mise.toml` carries the Node runtime and the common tasks, so anyone cloning the repository gets the same commands and a predictable local setup.
+      </p>
+    </div>
+    <div class="terminal">
+      <p class="terminal-title">Common commands</p>
+      <pre><code>mise run install
+mise run validate
+mise run dev
+mise run build</code></pre>
+    </div>
+  </div>
+</section>

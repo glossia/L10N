@@ -1,0 +1,23 @@
+{
+  "$id": "https://glossia.dev/schemas/l10n/v1/global-document.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "L10N Global Document",
+  "description": "Schema for the repository root L10N.md file.",
+  "type": "object",
+  "properties": {
+    "path": {
+      "const": "L10N.md"
+    },
+    "source_language": {
+      "$ref": "./shared.schema.json#/$defs/localeIdentifier"
+    },
+    "body": {
+      "$ref": "./shared.schema.json#/$defs/markdownBody"
+    }
+  },
+  "patternProperties": {
+    "^x-": true
+  },
+  "required": ["path", "source_language", "body"],
+  "additionalProperties": false
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title or site.title }}</title>
+    <meta name="description" content="{{ description or site.description }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/styles.css">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="masthead sheet">
+        <p class="eyebrow">Versioned standard for translation context</p>
+        <div class="masthead-row">
+          <div>
+            <p class="tag">schema v1</p>
+            <h1>L10N.md</h1>
+            <p class="lede">
+              A human-friendly convention for repository-wide translation guidance, scoped overrides, and locale-specific notes.
+            </p>
+          </div>
+          <nav aria-label="Primary">
+            <ul class="nav-list">
+              {% for item in site.nav %}
+                <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+              {% endfor %}
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        {{ content | safe }}
+      </main>
+    </div>
+  </body>
+</html>
