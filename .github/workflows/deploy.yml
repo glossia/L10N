@@ -3,40 +3,23 @@ name: Deploy
 on:
   push:
     branches: [main]
-  pull_request:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: jdx/mise-action@v2
-        with:
-          version: "2025.5.24"
-          install: true
-
-      - run: mise run install
-      - run: mise run build
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: site
-          path: _site/
-
   deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: build
     runs-on: ubuntu-latest
     environment: production
     permissions:
       contents: read
       deployments: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+
+      - uses: jdx/mise-action@v2
         with:
-          name: site
-          path: _site/
+          install: true
+
+      - run: mise run install
+      - run: mise run build
 
       - uses: cloudflare/wrangler-action@v3
         with:
