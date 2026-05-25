@@ -1,0 +1,39 @@
+---
+pagination:
+  data: spec.locales
+  size: 1
+  alias: locale
+permalink: "/v{{ spec.version }}/{% if locale.code != 'en' %}{{ locale.code }}/{% endif %}spec.md"
+eleventyExcludeFromCollections: true
+---
+{%- set sections = spec.byLocale[locale.code] -%}
+# {{ site.spec.name }} - Specification v{{ spec.version }} ({{ locale.label }})
+
+> {{ site.spec.subtitle }}
+
+Status: {{ site.spec.status }}
+Version: {{ spec.version }}
+Updated: {{ site.spec.updated }}
+Source: {{ site.repo }}
+License: {{ site.spec.license }}
+
+---
+
+{% for section in sections -%}
+{%- if section.kind == "preamble" -%}
+## {{ section.label or section.title }}
+
+{{ section.body }}
+
+{% elif section.kind == "section" -%}
+## {{ section.number }}. {{ section.title }}
+
+{{ section.body }}
+
+{% elif section.kind == "appendix" -%}
+## Appendix {{ section.number }}. {{ section.title }}
+
+{{ section.body }}
+
+{% endif -%}
+{% endfor %}
