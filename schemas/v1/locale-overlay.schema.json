@@ -12,13 +12,13 @@
     "locale": {
       "$ref": "./shared.schema.json#/$defs/localeIdentifier"
     },
+    "validation": {
+      "$ref": "./shared.schema.json#/$defs/nonEmptyStringArray"
+    },
     "body": {
       "$ref": "./shared.schema.json#/$defs/markdownBody"
     }
   },
-  "patternProperties": {
-    "^x-": true
-  },
   "required": ["path", "body"],
-  "additionalProperties": false
+  "additionalProperties": true
 }

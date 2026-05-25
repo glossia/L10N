@@ -1,3 +1,11 @@
+---
+locale: es
+validation:
+  - "./scripts/check-es.sh"
+  - "--max-length"
+  - "120"
+---
+
 ## Spanish-specific translation rules
 
 - Translate "workspace" as "espacio de trabajo".

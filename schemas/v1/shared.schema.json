@@ -11,15 +11,15 @@
       "type": "string",
       "minLength": 1
     },
-    "markdownBody": {
-      "type": "string",
-      "minLength": 1
+    "nonEmptyStringArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 1
     },
-    "extensionFields": {
-      "type": "object",
-      "patternProperties": {
-        "^x-": true
-      }
+    "markdownBody": {
+      "type": "string"
     }
   }
 }
