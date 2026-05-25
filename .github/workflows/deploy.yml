@@ -21,14 +21,6 @@ jobs:
       - run: mise run install
       - run: mise run build
 
-      - name: Create Cloudflare Pages project (if not exists)
-        uses: cloudflare/wrangler-action@v3
-        continue-on-error: true
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages project create glossia-l10n --production-branch main
-
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
