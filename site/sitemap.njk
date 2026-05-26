@@ -11,21 +11,37 @@ eleventyExcludeFromCollections: true
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  {% for l in spec.locales %}
   <url>
-    <loc>{{ site.url }}/v{{ spec.version }}/{% if l.code != 'en' %}{{ l.code }}/{% endif %}</loc>
+    <loc>{{ site.url }}/blog/</loc>
+    <lastmod>{{ site.spec.updated }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  {% for post in blog %}
+  <url>
+    <loc>{{ site.url }}/blog/{{ post.slug }}/</loc>
+    <lastmod>{{ post.date }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  {% endfor %}
+  {% for currentSpec in specs %}
+  {% for l in currentSpec.locales %}
+  <url>
+    <loc>{{ site.url }}/v{{ currentSpec.version }}/{% if l.code != 'en' %}{{ l.code }}/{% endif %}</loc>
     <lastmod>{{ site.spec.updated }}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>{% if l.code == 'en' %}1.0{% else %}0.8{% endif %}</priority>
-    {% for alt in spec.locales %}
-    <xhtml:link rel="alternate" hreflang="{{ alt.code }}" href="{{ site.url }}/v{{ spec.version }}/{% if alt.code != 'en' %}{{ alt.code }}/{% endif %}"/>
+    <priority>{% if currentSpec.version == site.spec.latest and l.code == 'en' %}1.0{% else %}0.8{% endif %}</priority>
+    {% for alt in currentSpec.locales %}
+    <xhtml:link rel="alternate" hreflang="{{ alt.code }}" href="{{ site.url }}/v{{ currentSpec.version }}/{% if alt.code != 'en' %}{{ alt.code }}/{% endif %}"/>
     {% endfor %}
   </url>
   <url>
-    <loc>{{ site.url }}/v{{ spec.version }}/{% if l.code != 'en' %}{{ l.code }}/{% endif %}spec.md</loc>
+    <loc>{{ site.url }}/v{{ currentSpec.version }}/{% if l.code != 'en' %}{{ l.code }}/{% endif %}spec.md</loc>
     <lastmod>{{ site.spec.updated }}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  {% endfor %}
   {% endfor %}
 </urlset>

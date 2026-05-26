@@ -39,23 +39,59 @@
   <body>
     <a class="skip-link" href="#abstract">Skip to content</a>
 
+    {% if spec and spec.version %}
+      {% set currentSpecVersion = spec.version %}
+    {% else %}
+      {% set currentSpecVersion = site.spec.latest %}
+    {% endif %}
+
     <header class="runninghead">
-      <span class="rh-name">{{ site.spec.name }}</span>
+      <a class="rh-name" href="/latest/">{{ site.spec.name }}</a>
       <span class="rh-sep" aria-hidden="true">/</span>
-      <span class="rh-meta">Specification v{{ site.spec.version }}</span>
-      {% if locale %}
-        <nav class="rh-locales" aria-label="Languages">
-          {% for l in spec.locales %}
-            {% set href %}/v{{ spec.version }}/{% if l.code != 'en' %}{{ l.code }}/{% endif %}{% endset %}
-            {% if l.code == locale.code %}
-              <span class="rh-locale rh-locale-current" aria-current="true">{{ l.code | upper }}</span>
-            {% else %}
-              <a class="rh-locale" href="{{ href }}" hreflang="{{ l.code }}">{{ l.code | upper }}</a>
-            {% endif %}
-          {% endfor %}
-        </nav>
-      {% endif %}
-      <a class="rh-source" href="{{ site.repo }}">Source repository</a>
+      <nav class="rh-versions" aria-label="Specification versions">
+        <details class="rh-version-switcher">
+          <summary class="rh-version-summary">v{{ currentSpecVersion }}</summary>
+          <div class="rh-version-menu">
+            {% for v in site.spec.versions %}
+              {% set versionHref %}/v{{ v }}/{% endset %}
+              {% if locale %}
+                {% if specFormat == "markdown" %}
+                  {% set versionHref %}/v{{ v }}/{% if locale.code != 'en' %}{{ locale.code }}/{% endif %}spec.md{% endset %}
+                {% else %}
+                  {% set versionHref %}/v{{ v }}/{% if locale.code != 'en' %}{{ locale.code }}/{% endif %}{% endset %}
+                {% endif %}
+              {% endif %}
+              {% if v == currentSpecVersion %}
+                <span class="rh-version-option rh-version-option-current" aria-current="true">v{{ v }}</span>
+              {% else %}
+                <a class="rh-version-option" href="{{ versionHref }}">v{{ v }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </details>
+      </nav>
+      <div class="rh-links">
+        {% if locale %}
+          <nav class="rh-locales" aria-label="Languages">
+            {% for l in spec.locales %}
+              {% if specFormat == "markdown" %}
+                {% set href %}/v{{ spec.version }}/{% if l.code != 'en' %}{{ l.code }}/{% endif %}spec.md{% endset %}
+              {% else %}
+                {% set href %}/v{{ spec.version }}/{% if l.code != 'en' %}{{ l.code }}/{% endif %}{% endset %}
+              {% endif %}
+              {% if l.code == locale.code %}
+                <span class="rh-locale rh-locale-current" aria-current="true">{{ l.code | upper }}</span>
+              {% else %}
+                <a class="rh-locale" href="{{ href }}" hreflang="{{ l.code }}">{{ l.code | upper }}</a>
+              {% endif %}
+            {% endfor %}
+          </nav>
+        {% endif %}
+        <div class="rh-sources">
+          <a class="rh-source" href="/blog/">Blog</a>
+          <a class="rh-source" href="{{ site.repo }}">Source</a>
+        </div>
+      </div>
     </header>
 
     <main class="doc">
@@ -64,7 +100,7 @@
 
     <footer class="colophon">
       <p>
-        {{ site.spec.name }} specification, version {{ site.spec.version }}.
+        {{ site.spec.name }} specification{% if locale %}, version {{ spec.version }}{% else %}, current stable version {{ site.spec.latest }}{% endif %}.
         Maintained at <a href="{{ site.repo }}">github.com/glossia/l10n</a>.
       </p>
       <p>This document follows its own formatting rules: no em dashes, source structure preserved.</p>

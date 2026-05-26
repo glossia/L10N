@@ -1,12 +1,15 @@
 ---
+specFormat: markdown
 pagination:
-  data: spec.locales
+  data: specPages
   size: 1
-  alias: locale
-permalink: "/v{{ spec.version }}/{% if locale.code != 'en' %}{{ locale.code }}/{% endif %}spec.md"
+  alias: specPage
+permalink: "/v{{ specPage.spec.version }}/{% if specPage.locale.code != 'en' %}{{ specPage.locale.code }}/{% endif %}spec.md"
 eleventyExcludeFromCollections: true
 ---
-{%- set sections = spec.byLocale[locale.code] -%}
+{%- set spec = specPage.spec -%}
+{%- set locale = specPage.locale -%}
+{%- set sections = specPage.sections -%}
 # {{ site.spec.name }} - Specification v{{ spec.version }} ({{ locale.label }})
 
 > {{ site.spec.subtitle }}

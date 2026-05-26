@@ -2,16 +2,19 @@
 layout: base.njk
 title: L10N.md Standard
 description: The L10N.md specification, a monochrome standards document for repository-resident translation context and its versioned JSON Schemas.
+specFormat: html
 pagination:
-  data: spec.locales
+  data: specPages
   size: 1
-  alias: locale
-permalink: "/v{{ spec.version }}/{% if locale.code != 'en' %}{{ locale.code }}/{% endif %}index.html"
+  alias: specPage
+permalink: "/v{{ specPage.spec.version }}/{% if specPage.locale.code != 'en' %}{{ specPage.locale.code }}/{% endif %}index.html"
 eleventyComputed:
-  title: "L10N.md Standard ({{ locale.label }})"
+  title: "L10N.md Standard v{{ specPage.spec.version }} ({{ specPage.locale.label }})"
 ---
 
-{% set sections = spec.byLocale[locale.code] %}
+{% set spec = specPage.spec %}
+{% set locale = specPage.locale %}
+{% set sections = specPage.sections %}
 
 <article class="spec" lang="{{ locale.code }}">
 
@@ -21,7 +24,7 @@ eleventyComputed:
     <p class="spec-subtitle">{{ site.spec.subtitle }}</p>
     <dl class="spec-meta">
       <div><dt>Status</dt><dd>{{ site.spec.status }}</dd></div>
-      <div><dt>Version</dt><dd>{{ site.spec.version }}</dd></div>
+      <div><dt>Version</dt><dd>{{ spec.version }}</dd></div>
       <div><dt>Updated</dt><dd>{{ site.spec.updated }}</dd></div>
       <div><dt>Source</dt><dd><a href="{{ site.repo }}">github.com/glossia/l10n</a></dd></div>
       <div><dt>License</dt><dd>{{ site.spec.license }}</dd></div>
