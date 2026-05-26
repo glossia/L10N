@@ -1,6 +1,5 @@
 ---
 locale: es
-model: "openai/gpt-5"
 validation:
   - "./scripts/check-es.sh"
   - "--max-length"

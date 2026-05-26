@@ -10,6 +10,7 @@ eleventyExcludeFromCollections: true
 {%- set spec = specPage.spec -%}
 {%- set locale = specPage.locale -%}
 {%- set sections = specPage.sections -%}
+{%- set referenceVersion = reference.byVersion[spec.version] -%}
 # {{ site.spec.name }} - Specification v{{ spec.version }} ({{ locale.label }})
 
 > {{ site.spec.subtitle }}
@@ -26,17 +27,17 @@ License: {{ site.spec.license }}
 {%- if section.kind == "preamble" -%}
 ## {{ section.label or section.title }}
 
-{{ section.body }}
+{{ section.body | renderNunjucks | safe }}
 
 {% elif section.kind == "section" -%}
 ## {{ section.number }}. {{ section.title }}
 
-{{ section.body }}
+{{ section.body | renderNunjucks | safe }}
 
 {% elif section.kind == "appendix" -%}
 ## Appendix {{ section.number }}. {{ section.title }}
 
-{{ section.body }}
+{{ section.body | renderNunjucks | safe }}
 
 {% endif -%}
 {% endfor %}

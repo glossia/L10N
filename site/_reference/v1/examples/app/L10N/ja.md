@@ -1,7 +1,3 @@
----
-model: "openai/gpt-5"
----
-
 ## Japanese-specific translation rules
 
 - Prefer a neutral and professional register over playful copy.
