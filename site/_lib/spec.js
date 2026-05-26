@@ -1,19 +1,15 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { compareVersionsDesc, directoryNameToVersion } from "./version.js";
 
 const contentRoot = path.join(process.cwd(), "site", "_content");
-const versionPattern = /^v(\d+)$/;
 const localeLabels = new Map([
   ["en", "English"],
   ["es", "Español"],
   ["ja", "日本語"],
 ]);
 const localeCollator = new Intl.Collator("en");
-
-function compareVersionsDesc(left, right) {
-  return Number(right) - Number(left);
-}
 
 function compareLocales(left, right) {
   if (left === right) {
@@ -38,8 +34,9 @@ function getLocaleLabel(code) {
 async function readVersionDirectories() {
   const entries = await fs.readdir(contentRoot, { withFileTypes: true });
   return entries
-    .filter((entry) => entry.isDirectory() && versionPattern.test(entry.name))
-    .map((entry) => entry.name.replace(/^v/, ""))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => directoryNameToVersion(entry.name))
+    .filter(Boolean)
     .sort(compareVersionsDesc);
 }
 

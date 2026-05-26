@@ -15,7 +15,7 @@ title: Ejemplos
 <figcaption>Listing 2. Canonical root <code>L10N.md</code></figcaption>
 
 ```
-{{ reference.standard }}
+{{ referenceVersion.standard }}
 ```
 
 </figure>
@@ -28,7 +28,7 @@ A root document that also carries workflow frontmatter, so the repository needs 
 <figcaption>Listing 3. <code>examples/single-repo/L10N.md</code></figcaption>
 
 ```
-{{ reference.examples.singleRepo }}
+{{ referenceVersion.examples.singleRepo }}
 ```
 
 </figure>
@@ -39,7 +39,7 @@ A root document that also carries workflow frontmatter, so the repository needs 
 <figcaption>Listing 4. <code>examples/app/L10N.md</code></figcaption>
 
 ```
-{{ reference.examples.scoped }}
+{{ referenceVersion.examples.scoped }}
 ```
 
 </figure>
@@ -50,7 +50,7 @@ A root document that also carries workflow frontmatter, so the repository needs 
 <figcaption>Listing 5. <code>examples/app/L10N/es.md</code></figcaption>
 
 ```
-{{ reference.examples.es }}
+{{ referenceVersion.examples.es }}
 ```
 
 </figure>
@@ -61,7 +61,7 @@ A root document that also carries workflow frontmatter, so the repository needs 
 <figcaption>Listing 6. <code>examples/app/L10N/ja.md</code></figcaption>
 
 ```
-{{ reference.examples.ja }}
+{{ referenceVersion.examples.ja }}
 ```
 
 </figure>

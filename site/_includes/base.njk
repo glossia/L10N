@@ -56,9 +56,9 @@
               {% set versionHref %}/v{{ v }}/{% endset %}
               {% if locale %}
                 {% if specFormat == "markdown" %}
-                  {% set versionHref %}/v{{ v }}/{% if locale.code != 'en' %}{{ locale.code }}/{% endif %}spec.md{% endset %}
+                  {% set versionHref %}/v{{ v }}/spec.md{% endset %}
                 {% else %}
-                  {% set versionHref %}/v{{ v }}/{% if locale.code != 'en' %}{{ locale.code }}/{% endif %}{% endset %}
+                  {% set versionHref %}/v{{ v }}/{% endset %}
                 {% endif %}
               {% endif %}
               {% if v == currentSpecVersion %}

@@ -17,6 +17,9 @@ export default function (eleventyConfig) {
     const rendered = njkEnv.renderString(value || "", this.ctx || {});
     return md.render(rendered);
   });
+  eleventyConfig.addFilter("renderNunjucks", function (value) {
+    return njkEnv.renderString(value || "", this.ctx || {});
+  });
 
   eleventyConfig.addPassthroughCopy({ "site/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "site/assets/favicon.ico": "favicon.ico" });
